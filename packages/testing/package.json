@@ -1,0 +1,17 @@
+{
+    "name": "@tihonove/testing",
+    "version": "0.1.0",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "private": true,
+    "description": "Test harness: fake ZenMoney API, sandboxes, fixtures",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "1.31.0"
+    }
+}

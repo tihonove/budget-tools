@@ -1,0 +1,533 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`server > name, instructions, tools with annotations 1`] = `
+[
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "List accounts with balances. Archived accounts only with include_archived.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "include_archived": {
+          "type": "boolean",
+        },
+      },
+      "type": "object",
+    },
+    "name": "accounts",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "List categories (tags) with their parent.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "properties": {},
+      "type": "object",
+    },
+    "name": "categories",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "Find transactions, newest first. Filters combine; text matches payee or comment, category a substring of the category path.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "account": {
+          "description": "account title (either side)",
+          "type": "string",
+        },
+        "category": {
+          "type": "string",
+        },
+        "include_deleted": {
+          "type": "boolean",
+        },
+        "kind": {
+          "enum": [
+            "expense",
+            "income",
+            "transfer",
+          ],
+          "type": "string",
+        },
+        "limit": {
+          "description": "default 100",
+          "maximum": 1000,
+          "minimum": 1,
+          "type": "integer",
+        },
+        "since": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "type": "string",
+        },
+        "text": {
+          "type": "string",
+        },
+        "until": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+    "name": "transactions",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "One transaction as stored by ZenMoney (raw JSON).",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "id": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "id",
+      ],
+      "type": "object",
+    },
+    "name": "transaction",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "Read-only SQL over the mirror. Tables (id, changed, json): account, tag, merchant, budget, reminder, instrument, user, "transaction" (quote it); use json->>'$.field'. Views: v_accounts, v_tags, v_tx.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "sql": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "sql",
+      ],
+      "type": "object",
+    },
+    "name": "query",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": true,
+      "readOnlyHint": true,
+    },
+    "description": "Pull the latest changes from ZenMoney now (normally done automatically, at most a minute old).",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "properties": {},
+      "type": "object",
+    },
+    "name": "sync",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Create an expense, income or transfer.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "account": {
+          "description": "account title or id; for transfers the source",
+          "type": "string",
+        },
+        "amount": {
+          "exclusiveMinimum": 0,
+          "type": "number",
+        },
+        "categories": {
+          "description": "category titles or ids",
+          "items": {
+            "type": "string",
+          },
+          "type": "array",
+        },
+        "comment": {
+          "type": "string",
+        },
+        "date": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "type": "string",
+        },
+        "kind": {
+          "enum": [
+            "expense",
+            "income",
+            "transfer",
+          ],
+          "type": "string",
+        },
+        "payee": {
+          "type": "string",
+        },
+        "to_account": {
+          "description": "transfers: the receiving account",
+          "type": "string",
+        },
+        "to_amount": {
+          "description": "transfers between currencies: amount received",
+          "exclusiveMinimum": 0,
+          "type": "number",
+        },
+      },
+      "required": [
+        "kind",
+        "account",
+        "amount",
+        "date",
+      ],
+      "type": "object",
+    },
+    "name": "add_transaction",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Change expenses / incomes: categories (replace; [] = none), payee, comment ('' clears), date, amount, account.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "account": {
+          "type": "string",
+        },
+        "amount": {
+          "exclusiveMinimum": 0,
+          "type": "number",
+        },
+        "categories": {
+          "items": {
+            "type": "string",
+          },
+          "type": "array",
+        },
+        "comment": {
+          "type": "string",
+        },
+        "date": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "type": "string",
+        },
+        "ids": {
+          "description": "transaction ids",
+          "items": {
+            "type": "string",
+          },
+          "minItems": 1,
+          "type": "array",
+        },
+        "payee": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "ids",
+      ],
+      "type": "object",
+    },
+    "name": "update_transactions",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Turn expenses / incomes into transfers with \`account\` on the other side (same currency only): an expense becomes this account → account, an income account → this account.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "account": {
+          "type": "string",
+        },
+        "ids": {
+          "description": "transaction ids",
+          "items": {
+            "type": "string",
+          },
+          "minItems": 1,
+          "type": "array",
+        },
+      },
+      "required": [
+        "ids",
+        "account",
+      ],
+      "type": "object",
+    },
+    "name": "convert_to_transfers",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Mark transactions as deleted (ZenMoney keeps them as deleted). Prefer fixing bank transactions instead.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "ids": {
+          "description": "transaction ids",
+          "items": {
+            "type": "string",
+          },
+          "minItems": 1,
+          "type": "array",
+        },
+      },
+      "required": [
+        "ids",
+      ],
+      "type": "object",
+    },
+    "name": "delete_transactions",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Create a category.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "income": {
+          "description": "shown for incomes, default true",
+          "type": "boolean",
+        },
+        "outcome": {
+          "description": "shown for expenses, default true",
+          "type": "boolean",
+        },
+        "parent": {
+          "type": "string",
+        },
+        "title": {
+          "minLength": 1,
+          "type": "string",
+        },
+      },
+      "required": [
+        "title",
+      ],
+      "type": "object",
+    },
+    "name": "add_category",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Rename a category, move it ('' parent = top level), toggle income / expense use.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "category": {
+          "type": "string",
+        },
+        "income": {
+          "type": "boolean",
+        },
+        "outcome": {
+          "type": "boolean",
+        },
+        "parent": {
+          "type": "string",
+        },
+        "title": {
+          "minLength": 1,
+          "type": "string",
+        },
+      },
+      "required": [
+        "category",
+      ],
+      "type": "object",
+    },
+    "name": "update_category",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Create a manual account.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "balance": {
+          "type": "number",
+        },
+        "currency": {
+          "description": "EUR, RUB, … or an instrument id",
+          "type": "string",
+        },
+        "in_balance": {
+          "description": "counted in the total, default true",
+          "type": "boolean",
+        },
+        "savings": {
+          "type": "boolean",
+        },
+        "title": {
+          "minLength": 1,
+          "type": "string",
+        },
+        "type": {
+          "description": "default ccard",
+          "enum": [
+            "cash",
+            "ccard",
+            "checking",
+            "loan",
+            "deposit",
+            "emoney",
+            "debt",
+          ],
+          "type": "string",
+        },
+      },
+      "required": [
+        "title",
+        "currency",
+      ],
+      "type": "object",
+    },
+    "name": "add_account",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Rename, set the current balance, archive, include in / exclude from the total.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "account": {
+          "type": "string",
+        },
+        "archive": {
+          "type": "boolean",
+        },
+        "balance": {
+          "type": "number",
+        },
+        "in_balance": {
+          "type": "boolean",
+        },
+        "savings": {
+          "type": "boolean",
+        },
+        "title": {
+          "minLength": 1,
+          "type": "string",
+        },
+      },
+      "required": [
+        "account",
+      ],
+      "type": "object",
+    },
+    "name": "update_account",
+    "title": undefined,
+  },
+]
+`;

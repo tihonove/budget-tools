@@ -1,0 +1,66 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run format:check
+      # Coverage with the ratchet: fails when coverage drops (thresholds in vitest.config.ts).
+      - run: npm run test:coverage
+      - name: Coverage report
+        if: always() && github.event_name == 'pull_request'
+        uses: davelosert/vitest-coverage-report-action@v2
+
+  # Mutation gate: Stryker, then every survivor re-checked by injection (scripts/verify-mutants.mjs).
+  # Incremental: unchanged mutants and tests are not re-run.
+  mutation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - name: Restore incremental results
+        id: incremental
+        uses: actions/cache/restore@v4
+        with:
+          path: reports/stryker-incremental.json
+          key: stryker-${{ github.head_ref || github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            stryker-${{ github.head_ref || github.ref_name }}-
+            stryker-main-
+      - run: npm run test:mutation
+      - name: Save incremental results
+        if: always() && hashFiles('reports/stryker-incremental.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: reports/stryker-incremental.json
+          key: ${{ steps.incremental.outputs.cache-primary-key }}
+      - name: Mutation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-report
+          path: |
+            reports/mutation/mutation.html
+            reports/mutation/verdict.json
+          retention-days: 14

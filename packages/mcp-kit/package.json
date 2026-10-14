@@ -1,0 +1,22 @@
+{
+    "name": "@tihonove/mcp-kit",
+    "version": "0.1.0",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "private": true,
+    "description": "Shared plumbing for the ZenMoney/Zerro MCP servers: per-token contexts, HTTP and stdio transports",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "1.31.0",
+        "@tihonove/zenmoney": "0.1.0",
+        "zod": "4.6.5"
+    },
+    "devDependencies": {
+        "@tihonove/testing": "0.1.0"
+    }
+}

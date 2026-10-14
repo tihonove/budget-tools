@@ -1,0 +1,17 @@
+{
+    "name": "@tihonove/cli-kit",
+    "version": "0.1.0",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "private": true,
+    "description": "Tiny subcommand/options/table helper shared by the CLIs",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "dependencies": {
+        "commander": "15.0.0"
+    }
+}

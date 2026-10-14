@@ -1,0 +1,26 @@
+{
+    "name": "@tihonove/mcp-zenmoney",
+    "version": "0.1.0",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "description": "MCP server for ZenMoney: accounts, categories, transactions",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "bin": {
+        "mcp-zenmoney": "./bin/stdio.ts",
+        "mcp-zenmoney-http": "./bin/http.ts"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "1.31.0",
+        "@tihonove/mcp-kit": "0.1.0",
+        "@tihonove/zenmoney": "0.1.0",
+        "zod": "4.6.5"
+    },
+    "devDependencies": {
+        "@tihonove/testing": "0.1.0"
+    }
+}

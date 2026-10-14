@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mcp
+spec:
+  tls:
+    - hosts: [zenmoney-mcp.tihonove.dev, zerro-mcp.tihonove.dev]
+  rules:
+    - host: zenmoney-mcp.tihonove.dev
+      http:
+        paths:
+          - {
+              path: /,
+              pathType: Prefix,
+              backend: { service: { name: mcp-zenmoney, port: { number: 80 } } },
+            }
+    - host: zerro-mcp.tihonove.dev
+      http:
+        paths:
+          - {
+              path: /,
+              pathType: Prefix,
+              backend: { service: { name: mcp-zerro, port: { number: 80 } } },
+            }

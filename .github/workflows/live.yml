@@ -1,0 +1,30 @@
+name: live
+
+# Contract tests against a real ZenMoney TEST account. The tests refuse to run unless the token
+# belongs to ZENMONEY_TEST_USER_ID, so a personal token here would stop them, not touch real data.
+#   secret   ZENMONEY_TEST_TOKEN    — token of the test account (https://zerro.app/token)
+#   variable ZENMONEY_TEST_USER_ID  — its user id
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"
+
+concurrency:
+  group: live
+  cancel-in-progress: false
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run test:live
+        env:
+          ZENMONEY_TEST_TOKEN: ${{ secrets.ZENMONEY_TEST_TOKEN }}
+          ZENMONEY_TEST_USER_ID: ${{ vars.ZENMONEY_TEST_USER_ID }}

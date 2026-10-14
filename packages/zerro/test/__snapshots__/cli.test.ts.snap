@@ -1,0 +1,132 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`help > budget --help 1`] = `
+"Usage: zerro budget [options] <envelope> <amount>
+
+set how much is budgeted to an envelope in a month
+
+Arguments:
+  envelope         envelope name or id
+  amount           amount in the envelope currency; 0 removes the budget
+
+Options:
+  --month <month>  YYYY-MM, default: this month
+  --add            add the amount to the current budget instead of replacing it
+  --dry-run        print the payload instead of sending it
+  -h, --help       display help for command
+"
+`;
+
+exports[`help > envelopes --help 1`] = `
+"Usage: zerro envelopes [options]
+
+list envelopes with ids, groups and settings
+
+Options:
+  --json      print JSON
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > goal --help 1`] = `
+"Usage: zerro goal [options] <envelope> [type] [amount]
+
+set an envelope's goal from a month on, or stop it with --off
+
+Arguments:
+  envelope         envelope name or id
+  type             monthly | monthlySpend | targetBalance | incomePercent
+  amount           amount; for incomePercent a share 0..1
+
+Options:
+  --end <month>    targetBalance: reach the amount by this month, YYYY-MM
+  --month <month>  from this month, YYYY-MM, default: this month
+  --off            stop the goal from this month
+  --dry-run        print the payload instead of sending it
+  -h, --help       display help for command
+"
+`;
+
+exports[`help > meta --help 1`] = `
+"Usage: zerro meta [options] <envelope>
+
+change envelope settings
+
+Arguments:
+  envelope                  envelope name or id
+
+Options:
+  --group <name>            group name; '' = default group
+  --index <n>               position in the list
+  --comment <text>          comment; '' removes it
+  --visibility <v>          hidden | visible | auto
+  --currency <code>         envelope currency, e.g. EUR
+  --carry-negatives <bool>  a negative balance carries over to the next month
+  --keep-income <bool>      income stays in the envelope
+  --dry-run                 print the payload instead of sending it
+  -h, --help                display help for command
+"
+`;
+
+exports[`help > move --help 1`] = `
+"Usage: zerro move [options] <amount> <from> <to>
+
+move budgeted money between envelopes within a month
+
+Arguments:
+  amount           amount
+  from             envelope name or id
+  to               envelope name or id
+
+Options:
+  --month <month>  YYYY-MM, default: this month
+  --dry-run        print the payload instead of sending it
+  -h, --help       display help for command
+"
+`;
+
+exports[`help > raw --help 1`] = `
+"Usage: zerro raw [options]
+
+dump the stored model as JSON (budgets, goals, envelope meta, settings)
+
+Options:
+  --reminders  include the underlying ZenMoney reminders
+  -h, --help   display help for command
+"
+`;
+
+exports[`help > show --help 1`] = `
+"Usage: zerro show [options]
+
+a month as Zerro shows it: budgeted / activity / available / goal, plus 'to be
+budgeted'
+
+Options:
+  --month <month>  YYYY-MM, default: this month
+  --all            include empty envelopes
+  --json           print JSON
+  -h, --help       display help for command
+"
+`;
+
+exports[`help > zerro --help 1`] = `
+"Usage: zerro [options] [command]
+
+Zerro (zerro.app) envelopes stored inside ZenMoney. Reads the zm mirror: run \`zm
+sync\` first.
+
+Options:
+  -h, --help                                 display help for command
+
+Commands:
+  raw [options]                              dump the stored model as JSON (budgets, goals, envelope meta, settings)
+  envelopes [options]                        list envelopes with ids, groups and settings
+  show [options]                             a month as Zerro shows it: budgeted / activity / available / goal, plus 'to be budgeted'
+  budget [options] <envelope> <amount>       set how much is budgeted to an envelope in a month
+  move [options] <amount> <from> <to>        move budgeted money between envelopes within a month
+  goal [options] <envelope> [type] [amount]  set an envelope's goal from a month on, or stop it with --off
+  meta [options] <envelope>                  change envelope settings
+  help [command]                             display help for command
+"
+`;

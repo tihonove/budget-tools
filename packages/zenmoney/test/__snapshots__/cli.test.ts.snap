@@ -1,0 +1,420 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`help > account --help 1`] = `
+"Usage: zm account [options] [command]
+
+accounts
+
+Options:
+  -h, --help                      display help for command
+
+Commands:
+  add [options] <title>           create an account
+  update [options] <account>      rename / set balance / archive an account
+  delete [options] <accounts...>  hard-delete accounts
+  help [command]                  display help for command
+"
+`;
+
+exports[`help > account add --help 1`] = `
+"Usage: zm account add [options] <title>
+
+create an account
+
+Options:
+  --currency <code>   EUR / RUB / instrument id
+  --type <type>       cash | ccard | checking | loan | deposit | emoney | debt
+                      (default: "ccard")
+  --balance <n>       current balance (default: 0)
+  --credit-limit <n>  credit limit (default: 0)
+  --no-in-balance     keep out of the total balance
+  --savings           a savings account
+  --dry-run           print the payload instead of sending it
+  -h, --help          display help for command
+"
+`;
+
+exports[`help > account delete --help 1`] = `
+"Usage: zm account delete [options] <accounts...>
+
+hard-delete accounts
+
+Arguments:
+  accounts    titles or ids
+
+Options:
+  --dry-run   print the payload instead of sending it
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > account update --help 1`] = `
+"Usage: zm account update [options] <account>
+
+rename / set balance / archive an account
+
+Arguments:
+  account              title or id
+
+Options:
+  --title <title>      new title
+  --balance <n>        set the current balance
+  --archive <bool>     archived
+  --in-balance <bool>  counted in the total balance
+  --savings <bool>     a savings account
+  --dry-run            print the payload instead of sending it
+  -h, --help           display help for command
+"
+`;
+
+exports[`help > accounts --help 1`] = `
+"Usage: zm accounts [options]
+
+list accounts
+
+Options:
+  --all       include archived
+  --json      print JSON
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > auth --help 1`] = `
+"Usage: zm auth [options]
+
+store the API token in .secrets/token
+
+Options:
+  --no-browser  don't open the token page
+  --no-check    don't validate the token with the API
+  -h, --help    display help for command
+
+Opens https://zerro.app/token in your browser (sign in with ZenMoney there), then asks you to paste
+the token. Also accepts the token on stdin: echo TOKEN | zm auth
+"
+`;
+
+exports[`help > instruments --help 1`] = `
+"Usage: zm instruments [options] [query]
+
+list currencies
+
+Arguments:
+  query       substring of code or title
+
+Options:
+  --json      print JSON
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > push --help 1`] = `
+"Usage: zm push [options] <file>
+
+send a raw diff payload (JSON with entity arrays and/or deletion)
+
+Arguments:
+  file        JSON file; '-' = stdin
+
+Options:
+  --dry-run   print the payload instead of sending it
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > sql --help 1`] = `
+"Usage: zm sql [options] <query...>
+
+query the mirror. Tables: instrument, company, user, account, tag, merchant,
+budget, reminder, reminderMarker, transaction (id, changed, json); views:
+v_accounts, v_tags, v_tx
+
+Options:
+  --json      print JSON
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > status --help 1`] = `
+"Usage: zm status [options]
+
+show user, sync time, object counts
+
+Options:
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > sync --help 1`] = `
+"Usage: zm sync [options]
+
+pull changes from the server into zenmoney.db
+
+Options:
+  --full      drop the mirror and download everything again
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > tag --help 1`] = `
+"Usage: zm tag [options] [command]
+
+categories
+
+Options:
+  -h, --help                  display help for command
+
+Commands:
+  add [options] <title>       create a category
+  update [options] <tag>      rename / reparent / toggle a category
+  delete [options] <tags...>  hard-delete categories
+  help [command]              display help for command
+"
+`;
+
+exports[`help > tag add --help 1`] = `
+"Usage: zm tag add [options] <title>
+
+create a category
+
+Options:
+  --parent <title>  parent category
+  --no-income       not shown for incomes
+  --no-outcome      not shown for expenses
+  --dry-run         print the payload instead of sending it
+  -h, --help        display help for command
+"
+`;
+
+exports[`help > tag delete --help 1`] = `
+"Usage: zm tag delete [options] <tags...>
+
+hard-delete categories
+
+Arguments:
+  tags        titles or ids
+
+Options:
+  --dry-run   print the payload instead of sending it
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > tag update --help 1`] = `
+"Usage: zm tag update [options] <tag>
+
+rename / reparent / toggle a category
+
+Arguments:
+  tag               title or id
+
+Options:
+  --title <title>   new title
+  --parent <title>  new parent; '' = top level
+  --income <bool>   shown for incomes
+  --outcome <bool>  shown for expenses
+  --dry-run         print the payload instead of sending it
+  -h, --help        display help for command
+"
+`;
+
+exports[`help > tags --help 1`] = `
+"Usage: zm tags [options]
+
+list categories as a tree
+
+Options:
+  --json      print JSON
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > tx --help 1`] = `
+"Usage: zm tx [options] [command]
+
+transactions
+
+Options:
+  -h, --help                      display help for command
+
+Commands:
+  list [options]                  list transactions from the mirror
+  show <ids...>                   print raw transaction JSON
+  add [options] <kind>            add one transaction
+  update [options] <ids...>       update fields of one or more transactions
+                                  (expense / income)
+  to-transfer [options] <ids...>  turn expenses / incomes into transfers with
+                                  the given account on the other side
+  delete [options] <ids...>       delete transactions
+  import [options] <file>         bulk create from JSONL, one transaction per
+                                  line
+  help [command]                  display help for command
+"
+`;
+
+exports[`help > tx add --help 1`] = `
+"Usage: zm tx add [options] <kind>
+
+add one transaction
+
+Arguments:
+  kind                  expense | income | transfer
+
+Options:
+  --account <title>     account title or id
+  --amount <n>          amount
+  --date <date>         YYYY-MM-DD
+  --to-account <title>  transfers: the receiving account
+  --to-amount <n>       transfers between currencies: the received amount
+  --tag <title>         category title or id (repeatable)
+  --payee <text>
+  --comment <text>
+  --dry-run             print the payload instead of sending it
+  -h, --help            display help for command
+"
+`;
+
+exports[`help > tx delete --help 1`] = `
+"Usage: zm tx delete [options] <ids...>
+
+delete transactions
+
+Arguments:
+  ids         transaction ids; '-' reads them from stdin
+
+Options:
+  --hard      hard delete instead of deleted=true
+  --dry-run   print the payload instead of sending it
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > tx import --help 1`] = `
+"Usage: zm tx import [options] <file>
+
+bulk create from JSONL, one transaction per line
+
+Arguments:
+  file         JSONL file; '-' = stdin
+
+Options:
+  --chunk <n>  transactions per request (default: 500)
+  --dry-run    print the payloads instead of sending them
+  -h, --help   display help for command
+
+Lines (# starts a comment):
+  {"kind":"expense","account":"Revolut €","amount":12.5,"date":"2026-10-01","tag":["Meal"],"payee":"..."}
+  {"kind":"transfer","account":"Tinkoff","amount":1000,"to_account":"Cash ₽","to_amount":1000,"date":"2026-10-01"}
+"
+`;
+
+exports[`help > tx list --help 1`] = `
+"Usage: zm tx list [options]
+
+list transactions from the mirror
+
+Options:
+  --since <date>     from date, YYYY-MM-DD
+  --until <date>     to date, YYYY-MM-DD
+  --account <title>  outcome or income account
+  --tag <text>       substring of the category title
+  --payee <text>     substring of payee or comment
+  --kind <kind>      expense | income | transfer
+  --deleted          include deleted
+  --limit <n>        how many, newest first (default: 50)
+  --json             print JSON
+  -h, --help         display help for command
+"
+`;
+
+exports[`help > tx show --help 1`] = `
+"Usage: zm tx show [options] <ids...>
+
+print raw transaction JSON
+
+Options:
+  -h, --help  display help for command
+"
+`;
+
+exports[`help > tx to-transfer --help 1`] = `
+"Usage: zm tx to-transfer [options] <ids...>
+
+turn expenses / incomes into transfers with the given account on the other side
+
+Arguments:
+  ids                transaction ids; '-' reads them from stdin
+
+Options:
+  --account <title>  the other side of the transfer
+  --dry-run          print the payload instead of sending it
+  -h, --help         display help for command
+
+An expense becomes "this account -> ACCOUNT", an income becomes "ACCOUNT -> this account".
+The amount is copied as is, so both accounts must share a currency (use \`zm push\` otherwise).
+"
+`;
+
+exports[`help > tx update --help 1`] = `
+"Usage: zm tx update [options] <ids...>
+
+update fields of one or more transactions (expense / income)
+
+Options:
+  --tag <title>      replaces categories; '' = none (repeatable)
+  --payee <text>     '' clears
+  --comment <text>   '' clears
+  --date <date>      YYYY-MM-DD
+  --amount <n>       amount
+  --account <title>  move to another account
+  --dry-run          print the payload instead of sending it
+  -h, --help         display help for command
+"
+`;
+
+exports[`help > wipe --help 1`] = `
+"Usage: zm wipe [options]
+
+hard-delete EVERYTHING of a kind (dry run unless --yes)
+
+Options:
+  --transactions  all transactions
+  --tags          all categories
+  --accounts      all accounts except the debt one
+  --merchants     all merchants
+  --yes           actually do it
+  -h, --help      display help for command
+"
+`;
+
+exports[`help > zm --help 1`] = `
+"Usage: zm [options] [command]
+
+ZenMoney CLI with a local mirror (zenmoney.db).
+
+Options:
+  -h, --help                     display help for command
+
+Commands:
+  auth [options]                 store the API token in .secrets/token
+  sync [options]                 pull changes from the server into zenmoney.db
+  status                         show user, sync time, object counts
+  accounts [options]             list accounts
+  tags [options]                 list categories as a tree
+  instruments [options] [query]  list currencies
+  tx                             transactions
+  tag                            categories
+  account                        accounts
+  push [options] <file>          send a raw diff payload (JSON with entity
+                                 arrays and/or deletion)
+  sql [options] <query...>       query the mirror. Tables: instrument, company,
+                                 user, account, tag, merchant, budget, reminder,
+                                 reminderMarker, transaction (id, changed,
+                                 json); views: v_accounts, v_tags, v_tx
+  wipe [options]                 hard-delete EVERYTHING of a kind (dry run
+                                 unless --yes)
+  help [command]                 display help for command
+
+Token: ZENMONEY_TOKEN or .secrets/token (zm auth).
+"
+`;

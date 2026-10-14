@@ -1,0 +1,30 @@
+{
+    "name": "budget-tools",
+    "private": true,
+    "type": "module",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "test:mutation": "stryker run && node scripts/verify-mutants.mjs",
+        "test:live": "vitest run --config vitest.live.config.ts",
+        "typecheck": "tsc -p .",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "devDependencies": {
+        "@stryker-mutator/core": "10.0.0",
+        "@stryker-mutator/vitest-runner": "10.0.0",
+        "@types/node": "24.19.0",
+        "@vitest/coverage-v8": "4.0.18",
+        "prettier": "3.9.9",
+        "typescript": "5.9.3",
+        "vitest": "4.0.18"
+    }
+}

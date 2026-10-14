@@ -1,0 +1,24 @@
+{
+    "name": "@tihonove/zerro",
+    "version": "0.1.0",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "description": "Read and edit the Zerro (zerro.app) envelope model stored inside ZenMoney, and the `zerro` CLI",
+    "exports": {
+        ".": "./src/index.ts",
+        "./cli": "./src/cli.ts"
+    },
+    "bin": {
+        "zerro": "./bin/zerro.ts"
+    },
+    "dependencies": {
+        "@tihonove/zenmoney": "0.1.0",
+        "@tihonove/cli-kit": "0.1.0"
+    },
+    "devDependencies": {
+        "@tihonove/testing": "0.1.0"
+    }
+}

@@ -1,0 +1,278 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`server > name, instructions, tools with annotations 1`] = `
+[
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "A month as Zerro shows it: summary (income, budgeted, spent, overspend, to be budgeted) and every envelope with budgeted / activity / available and what its goal still needs (goalNeed). Empty envelopes only with all.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "all": {
+          "type": "boolean",
+        },
+        "month": {
+          "description": "YYYY-MM, default: the current month",
+          "pattern": "^\\d{4}-\\d{2}$",
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+    "name": "month",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "All envelopes in display order with ids, groups and settings.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "properties": {},
+      "type": "object",
+    },
+    "name": "envelopes",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": false,
+      "readOnlyHint": true,
+    },
+    "description": "The raw stored Zerro model: budgets and goals by month, envelope settings, user settings.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "properties": {},
+      "type": "object",
+    },
+    "name": "model",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "openWorldHint": true,
+      "readOnlyHint": true,
+    },
+    "description": "Pull the latest changes from ZenMoney now (normally done automatically, at most a minute old).",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "properties": {},
+      "type": "object",
+    },
+    "name": "sync",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Set how much is budgeted to an envelope in a month (0 removes it), or with add: change it by amount.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "add": {
+          "type": "boolean",
+        },
+        "amount": {
+          "type": "number",
+        },
+        "envelope": {
+          "description": "envelope name or id",
+          "type": "string",
+        },
+        "month": {
+          "description": "YYYY-MM, default: the current month",
+          "pattern": "^\\d{4}-\\d{2}$",
+          "type": "string",
+        },
+      },
+      "required": [
+        "envelope",
+        "amount",
+      ],
+      "type": "object",
+    },
+    "name": "set_budget",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": false,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Move budgeted money from one envelope to another within a month.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "amount": {
+          "exclusiveMinimum": 0,
+          "type": "number",
+        },
+        "from": {
+          "description": "envelope name or id",
+          "type": "string",
+        },
+        "month": {
+          "description": "YYYY-MM, default: the current month",
+          "pattern": "^\\d{4}-\\d{2}$",
+          "type": "string",
+        },
+        "to": {
+          "description": "envelope name or id",
+          "type": "string",
+        },
+      },
+      "required": [
+        "amount",
+        "from",
+        "to",
+      ],
+      "type": "object",
+    },
+    "name": "move_money",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Set an envelope's goal from a month on (it carries over to later months), or stop it with off. Types: monthly — budget amount every month; monthlySpend — have amount available every month; targetBalance — reach amount in the envelope (by end month if given); incomePercent — budget amount (0..1) of income.",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "amount": {
+          "exclusiveMinimum": 0,
+          "type": "number",
+        },
+        "end": {
+          "description": "targetBalance: deadline month",
+          "pattern": "^\\d{4}-\\d{2}$",
+          "type": "string",
+        },
+        "envelope": {
+          "description": "envelope name or id",
+          "type": "string",
+        },
+        "month": {
+          "description": "YYYY-MM, default: the current month",
+          "pattern": "^\\d{4}-\\d{2}$",
+          "type": "string",
+        },
+        "off": {
+          "description": "stop the goal from this month",
+          "type": "boolean",
+        },
+        "type": {
+          "enum": [
+            "monthly",
+            "monthlySpend",
+            "targetBalance",
+            "incomePercent",
+          ],
+          "type": "string",
+        },
+      },
+      "required": [
+        "envelope",
+      ],
+      "type": "object",
+    },
+    "name": "set_goal",
+    "title": undefined,
+  },
+  {
+    "_meta": undefined,
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": false,
+      "readOnlyHint": false,
+    },
+    "description": "Change envelope settings: group ("" = default), position, comment ("" removes), visibility, currency, carry_negatives (a negative balance carries over), keep_income (income stays in the envelope).",
+    "execution": {
+      "taskSupport": "forbidden",
+    },
+    "inputSchema": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "properties": {
+        "carry_negatives": {
+          "type": "boolean",
+        },
+        "comment": {
+          "type": "string",
+        },
+        "currency": {
+          "type": "string",
+        },
+        "envelope": {
+          "description": "envelope name or id",
+          "type": "string",
+        },
+        "group": {
+          "type": "string",
+        },
+        "index": {
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991,
+          "type": "integer",
+        },
+        "keep_income": {
+          "type": "boolean",
+        },
+        "visibility": {
+          "enum": [
+            "hidden",
+            "visible",
+            "auto",
+          ],
+          "type": "string",
+        },
+      },
+      "required": [
+        "envelope",
+      ],
+      "type": "object",
+    },
+    "name": "envelope_settings",
+    "title": undefined,
+  },
+]
+`;

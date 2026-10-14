@@ -1,0 +1,23 @@
+{
+    "name": "@tihonove/zenmoney",
+    "version": "0.1.0",
+    "type": "module",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.18"
+    },
+    "description": "ZenMoney API client with a local sqlite mirror, and the `zm` CLI",
+    "exports": {
+        ".": "./src/index.ts",
+        "./cli": "./src/cli.ts"
+    },
+    "bin": {
+        "zm": "./bin/zm.ts"
+    },
+    "dependencies": {
+        "@tihonove/cli-kit": "0.1.0"
+    },
+    "devDependencies": {
+        "@tihonove/testing": "0.1.0"
+    }
+}

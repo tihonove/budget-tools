@@ -1,0 +1,10 @@
+**/node_modules
+**/test
+**/test-live
+**/__snapshots__
+reports
+coverage
+.stryker-tmp
+**/*.db
+.secrets
+.git

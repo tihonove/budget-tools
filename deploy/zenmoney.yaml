@@ -1,0 +1,69 @@
+# mcp-zenmoney: the ZenMoney token comes with each request, so there are no secrets here.
+# /data holds per-token sqlite mirrors (a cache: losing it only costs a full sync).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mcp-zenmoney-data
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-zenmoney
+  labels: { app: mcp-zenmoney }
+spec:
+  replicas: 1
+  # The volume is node-local and single-writer: replace the pod instead of overlapping.
+  strategy: { type: Recreate }
+  selector:
+    matchLabels: { app: mcp-zenmoney }
+  template:
+    metadata:
+      labels: { app: mcp-zenmoney }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: mcp-zenmoney
+          image: mcp-zenmoney
+          ports:
+            - { name: http, containerPort: 8080 }
+          env:
+            - { name: PORT, value: "8080" }
+            - { name: DATA_DIR, value: /data }
+            - { name: ZENMONEY_API, value: https://api.zenmoney.ru }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 30
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { memory: 384Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: mcp-zenmoney-data }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-zenmoney
+spec:
+  selector: { app: mcp-zenmoney }
+  ports:
+    - { name: http, port: 80, targetPort: http }
