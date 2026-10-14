@@ -1,14 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - zenmoney.yaml
-  - zerro.yaml
-  - ingress.yaml
+- zenmoney.yaml
+- zerro.yaml
+- ingress.yaml
 # Tags are set by the release workflow: kustomize edit set image mcp-zenmoney=ghcr.io/tihonove/mcp-zenmoney:<sha>
 images:
-  - name: mcp-zenmoney
-    newName: ghcr.io/tihonove/mcp-zenmoney
-    newTag: unreleased
-  - name: mcp-zerro
-    newName: ghcr.io/tihonove/mcp-zerro
-    newTag: unreleased
+- name: mcp-zenmoney
+  newName: ghcr.io/tihonove/mcp-zenmoney
+  newTag: 86ccfb4f0a679ba7a8a41c91f1ee6890c4b141af
+- name: mcp-zerro
+  newName: ghcr.io/tihonove/mcp-zerro
+  newTag: 86ccfb4f0a679ba7a8a41c91f1ee6890c4b141af
